@@ -1,0 +1,14 @@
+Bienvenu Chez Super Marché Fred
+
+Numéro Facture : 5685
+Nom Client : 
+Téléphone : 
+Email : 
+************************************
+Produits		Qte		Prix
+************************************Levis		1		5000
+
+************************************
+Total Bruite : 			Rs.5000.00
+Taxe : 			Rs.0.00
+Total Net : 			Rs.5000.00

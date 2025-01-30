@@ -1,0 +1,14 @@
+Bienvenu Chez Super Marché Fred
+
+Numéro Facture : 6979
+Nom Client : 
+Téléphone : 
+Email : 
+************************************
+Produits		Qte		Prix
+************************************Iphone X		1		45000
+
+************************************
+Total Bruite : 			Rs.45000.00
+Taxe : 			Rs.0.00
+Total Net : 			Rs.45000.00
