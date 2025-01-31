@@ -1,0 +1,124 @@
+import random
+from time import strftime
+from PIL import ImageTk, Image
+import tkinter as tk  # Importation correcte de Tkinter
+from tkinter import Label, Tk, Frame, LabelFrame, W, ttk, GROOVE
+from tkinter import StringVar, IntVar
+import os
+
+class SuperMarche:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("SUPER MARCHE")
+        self.root.geometry("1920x1040+0+0")
+
+        # Ajout du titre avec la correction
+        title = Label(self.root, text="SUPER MARCHE", font=("Algerian", 45), bg="#000000", fg="#fff")
+        title.pack(side=tk.TOP, fill=tk.X)  # Ajout de tk. devant TOP et X
+
+        def heure():
+            heur = strftime("%H:%M:%S")
+            lblheur.config(text=heur)
+            lblheur.after(1000,heure)
+
+        lblheur = Label(self.root, text="HH:MM:SS", font=("times new roman", 15, "bold"), bg="#000000", fg="#fff")
+        lblheur.place(x=0, y=25, width=120, height=45)
+
+        heure()
+
+        #========== Nos variables ===========
+        self.c_nom = StringVar()
+        self.c_phon = StringVar()
+
+        self.c_factu = StringVar()
+        z = random.randint(1000,9999)
+        self.c_factu.set(z)
+
+        self.c_email = StringVar()
+        self.rech_factu = StringVar()
+        self.produit = StringVar()
+        self.prix = IntVar()
+        self.qte = IntVar()
+        self.totalbruite = StringVar()
+        self.taxe = StringVar()
+        self.totalnet = StringVar()
+
+        ## -------- List Categoie ----------
+        
+
+
+
+
+        Main_Frame = Frame(self.root, bd=2, relief=GROOVE, bg='white')
+        Main_Frame.place(x=10, y=100, width=1345, height=630)
+
+
+        #============ CLIENT ================
+        client_frame = LabelFrame(Main_Frame, text="CLIENT", font=("times new roman", 15), bg="#fff") 
+        client_frame.place(x=10, y=5, width=350, height=150)
+
+        self.lbl_contact = Label(client_frame, text="Contact", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_contact.grid(row=0, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_nomclient = Label(client_frame, text="Nom Client", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_nomclient.grid(row=1, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_emailclient = Label(client_frame, text="Email Clien", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_emailclient.grid(row=2, column=0, sticky=W, padx=5, pady=2)
+
+        self.txt_contact = ttk.Entry(client_frame, textvariable=self.c_phon, font=("times new roman", 15))
+        self.txt_contact.grid(row=0, column=1, sticky=W, padx=5, pady=2)
+
+        self.txt_nomclient = ttk.Entry(client_frame, textvariable=self.c_nom, font=("times new roman", 15))
+        self.txt_nomclient.grid(row=1, column=1, sticky=W, padx=5, pady=2)
+
+        self.txt_emailclient = ttk.Entry(client_frame, textvariable=self.c_email, font=("times new roman", 15))
+        self.txt_emailclient.grid(row=2, column=1, sticky=W, padx=5, pady=2)
+
+
+
+        #==========+== PRODUIT ==============
+        produit_form = LabelFrame(Main_Frame, text="PRODUIT", font=("times new roman", 15), bg="#fff") 
+        produit_form.place(x=380, y=5, width=600, height=150)
+
+        self.lbl_categorir = Label(produit_form, text="Selectionne Catégorie", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_categorir.grid(row=0, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_souscategorir = Label(produit_form, text="Sous Catégorie", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_souscategorir.grid(row=1, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_nomcategorir = Label(produit_form, text="Nom Catégorie", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_nomcategorir.grid(row=2, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_prix = Label(produit_form, text="Prix", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_prix.grid(row=0, column=2, sticky=W, padx=5, pady=2)
+
+        self.lbl_qte = Label(produit_form, text="Quantité", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_qte.grid(row=1, column=2, sticky=W, padx=5, pady=2)
+
+        self.txt_categorir = ttk.Combobox(produit_form, font=("times new roman", 15), values=["Selection","1","2"], width=13, state="readonly")
+        self.txt_categorir.grid(row=0, column=1, sticky=W, padx=5, pady=2)
+        self.txt_categorir.current(0)
+
+        self.txt_souscategorir = ttk.Combobox(produit_form, font=("times new roman", 15), values=["Selection","1","2"], width=13, state="readonly")
+        self.txt_souscategorir.grid(row=1, column=1, sticky=W, padx=5, pady=2)
+        self.txt_souscategorir.current(0)
+
+        self.txt_nomproduit = ttk.Combobox(produit_form, font=("times new roman", 15), values=["Selection","1","2"], width=13, state="readonly")
+        self.txt_nomproduit.grid(row=2, column=1, sticky=W, padx=5, pady=2)
+        self.txt_nomproduit.current(0)
+
+        self.txt_prix = ttk.Combobox(produit_form, font=("times new roman", 15), values=["Selection","1","2"], width=10, state="readonly")
+        self.txt_prix.grid(row=0, column=3, sticky=W, padx=5, pady=2)
+        self.txt_prix.current(0)
+
+        self.txt_qte = ttk.Combobox(produit_form, font=("times new roman", 15), values=["Selection","1","2"], width=10, state="readonly")
+        self.txt_qte.grid(row=1, column=3, sticky=W, padx=5, pady=2)
+        self.txt_qte.current(0)
+
+
+
+if __name__ == "__main__":
+    root = Tk()
+    obj = SuperMarche(root)
+    root.mainloop()

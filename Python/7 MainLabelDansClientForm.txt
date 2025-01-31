@@ -1,0 +1,50 @@
+import random
+from time import strftime
+from PIL import ImageTk, Image
+import tkinter as tk  # Importation correcte de Tkinter
+from tkinter import Label, Tk, Frame, LabelFrame, W, GROOVE
+import os
+
+class SuperMarche:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("SUPER MARCHE")
+        self.root.geometry("1920x1040+0+0")
+
+        # Ajout du titre avec la correction
+        title = Label(self.root, text="SUPER MARCHE", font=("Algerian", 45), bg="#000000", fg="#fff")
+        title.pack(side=tk.TOP, fill=tk.X)  # Ajout de tk. devant TOP et X
+
+        def heure():
+            heur = strftime("%H:%M:%S")
+            lblheur.config(text=heur)
+            lblheur.after(1000,heure)
+
+        lblheur = Label(self.root, text="HH:MM:SS", font=("times new roman", 15, "bold"), bg="#000000", fg="#fff")
+        lblheur.place(x=0, y=25, width=120, height=45)
+
+        heure()
+
+        Main_Frame = Frame(self.root, bd=2, relief=GROOVE, bg='white')
+        Main_Frame.place(x=10, y=100, width=1345, height=630)
+
+
+        #============ CLIENT =============
+        client_frame = LabelFrame(Main_Frame, text="CLIENT", font=("times new roman", 15), bg="#fff") 
+        client_frame.place(x=10, y=5, width=450, height=150)
+
+        self.lbl_contact = Label(client_frame, text="Contact", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_contact.grid(row=0, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_nomclient = Label(client_frame, text="Nom Client", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_nomclient.grid(row=1, column=0, sticky=W, padx=5, pady=2)
+
+        self.lbl_emailclient = Label(client_frame, text="Email Clien", font=("times new roman", 15, "bold"), bg="#fff")
+        self.lbl_emailclient.grid(row=2, column=0, sticky=W, padx=5, pady=2)
+
+
+
+if __name__ == "__main__":
+    root = Tk()
+    obj = SuperMarche(root)
+    root.mainloop()

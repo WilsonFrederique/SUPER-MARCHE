@@ -1,0 +1,19 @@
+import random
+from time import strftime
+from PIL import ImageTk, Image
+from tkinter import Tk
+import os
+
+class SuperMarche:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("SUPER MARCHE")
+        self.root.geometry("1920x1040+0+0")
+
+
+
+
+if __name__=="__main__":
+    root=Tk()
+    obj = SuperMarche(root)
+    root.mainloop()

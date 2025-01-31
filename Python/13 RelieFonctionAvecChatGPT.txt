@@ -1,0 +1,103 @@
+import random
+from time import strftime
+import tkinter as tk
+from tkinter import Label, Frame, LabelFrame, W, ttk, GROOVE, StringVar, IntVar
+
+class SuperMarche:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("SUPER MARCHE")
+        self.root.geometry("1920x1040+0+0")
+
+        title = Label(self.root, text="SUPER MARCHE", font=("Algerian", 45), bg="#000000", fg="#fff")
+        title.pack(side=tk.TOP, fill=tk.X)
+
+        def heure():
+            heur = strftime("%H:%M:%S")
+            lblheur.config(text=heur)
+            lblheur.after(1000, heure)
+
+        lblheur = Label(self.root, text="HH:MM:SS", font=("times new roman", 15, "bold"), bg="#000000", fg="#fff")
+        lblheur.place(x=0, y=25, width=120, height=45)
+        heure()
+
+        # Variables
+        self.c_nom = StringVar()
+        self.c_phon = StringVar()
+        self.c_factu = StringVar(value=str(random.randint(1000, 9999)))
+        self.c_email = StringVar()
+        self.produit = StringVar()
+        self.prix = IntVar()
+        self.qte = IntVar()
+        
+        self.list_categorie = ["Selection", "Vetement", "Style de vie", "Téléphone"]
+        self.sous_categories = {
+            "Vetement": ["Pantelon", "T-Shirt", "Shirt"],
+            "Style de vie": ["Bath Soap", "Crème", "Huile de cheveux"],
+            "Téléphone": ["Iphone", "Samsung", "Huawei", "Techno"]
+        }
+
+        self.produits_prix = {
+            "Pantelon": {"Levis": 5000, "Mufty": 1000, "Skykar": 3000},
+            "T-Shirt": {"Polo": 1500, "Roadster": 2550, "Jack&Jones": 3600},
+            "Iphone": {"Iphone X": 45000, "Iphone 11": 65000, "Iphone 12": 930000}
+        }
+
+        Main_Frame = Frame(self.root, bd=2, relief=GROOVE, bg='white')
+        Main_Frame.place(x=10, y=100, width=1345, height=630)
+
+        client_frame = LabelFrame(Main_Frame, text="CLIENT", font=("times new roman", 15), bg="#fff") 
+        client_frame.place(x=10, y=5, width=350, height=150)
+
+        Label(client_frame, text="Contact", font=("times new roman", 15, "bold"), bg="#fff").grid(row=0, column=0, sticky=W, padx=5, pady=2)
+        Label(client_frame, text="Nom Client", font=("times new roman", 15, "bold"), bg="#fff").grid(row=1, column=0, sticky=W, padx=5, pady=2)
+        Label(client_frame, text="Email Client", font=("times new roman", 15, "bold"), bg="#fff").grid(row=2, column=0, sticky=W, padx=5, pady=2)
+
+        ttk.Entry(client_frame, textvariable=self.c_phon, font=("times new roman", 15)).grid(row=0, column=1, sticky=W, padx=5, pady=2)
+        ttk.Entry(client_frame, textvariable=self.c_nom, font=("times new roman", 15)).grid(row=1, column=1, sticky=W, padx=5, pady=2)
+        ttk.Entry(client_frame, textvariable=self.c_email, font=("times new roman", 15)).grid(row=2, column=1, sticky=W, padx=5, pady=2)
+
+        produit_form = LabelFrame(Main_Frame, text="PRODUIT", font=("times new roman", 15), bg="#fff") 
+        produit_form.place(x=380, y=5, width=600, height=150)
+
+        Label(produit_form, text="Catégorie", font=("times new roman", 15, "bold"), bg="#fff").grid(row=0, column=0, sticky=W, padx=5, pady=2)
+        Label(produit_form, text="Sous Catégorie", font=("times new roman", 15, "bold"), bg="#fff").grid(row=1, column=0, sticky=W, padx=5, pady=2)
+        Label(produit_form, text="Produit", font=("times new roman", 15, "bold"), bg="#fff").grid(row=2, column=0, sticky=W, padx=5, pady=2)
+        Label(produit_form, text="Prix", font=("times new roman", 15, "bold"), bg="#fff").grid(row=0, column=2, sticky=W, padx=5, pady=2)
+        Label(produit_form, text="Quantité", font=("times new roman", 15, "bold"), bg="#fff").grid(row=1, column=2, sticky=W, padx=5, pady=2)
+
+        self.txt_categorir = ttk.Combobox(produit_form, values=self.list_categorie, state="readonly", font=("times new roman", 15))
+        self.txt_categorir.grid(row=0, column=1, padx=5, pady=2)
+        self.txt_categorir.bind("<<ComboboxSelected>>", self.update_sous_categorie)
+        
+        self.txt_souscategorir = ttk.Combobox(produit_form, state="readonly", font=("times new roman", 15))
+        self.txt_souscategorir.grid(row=1, column=1, padx=5, pady=2)
+        self.txt_souscategorir.bind("<<ComboboxSelected>>", self.update_produit)
+        
+        self.txt_produit = ttk.Combobox(produit_form, state="readonly", font=("times new roman", 15))
+        self.txt_produit.grid(row=2, column=1, padx=5, pady=2)
+        self.txt_produit.bind("<<ComboboxSelected>>", self.update_prix)
+        
+        self.txt_prix = ttk.Entry(produit_form, textvariable=self.prix, font=("times new roman", 15), state='readonly')
+        self.txt_prix.grid(row=0, column=3, padx=5, pady=2)
+        self.txt_qte = ttk.Entry(produit_form, textvariable=self.qte, font=("times new roman", 15))
+        self.txt_qte.grid(row=1, column=3, padx=5, pady=2)
+
+    def update_sous_categorie(self, event):
+        cat = self.txt_categorir.get()
+        self.txt_souscategorir['values'] = self.sous_categories.get(cat, [])
+        self.txt_souscategorir.current(0)
+
+    def update_produit(self, event):
+        sous_cat = self.txt_souscategorir.get()
+        self.txt_produit['values'] = list(self.produits_prix.get(sous_cat, {}).keys())
+        self.txt_produit.current(0)
+
+    def update_prix(self, event):
+        prod = self.txt_produit.get()
+        sous_cat = self.txt_souscategorir.get()
+        self.prix.set(self.produits_prix.get(sous_cat, {}).get(prod, 0))
+
+root = tk.Tk()
+app = SuperMarche(root)
+root.mainloop()
